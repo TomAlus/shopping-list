@@ -1,6 +1,7 @@
 const itemForm = document.getElementById("item-form");
 const itemInput = document.getElementById("item-input");
 const itemList = document.getElementById("item-list");
+const clearButton = document.getElementById("clear");
 
 const createIcon = (classes) => {
   const icon = document.createElement("i");
@@ -44,7 +45,14 @@ const removeItem = (e) => {
   }
 };
 
+// Clear all items
+const clearItems = (e) => {
+  while (itemList.firstChild) {
+    itemList.removeChild(itemList.firstChild);
+  }
+};
+
 // Event Listeners
 itemForm.addEventListener("submit", addItem);
 itemList.addEventListener("click", removeItem);
-itemList.addEventListener("click", removeItem);
+clearButton.addEventListener("click", clearItems);
