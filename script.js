@@ -3,6 +3,9 @@ const itemInput = document.getElementById('item-input');
 const itemList = document.getElementById('item-list');
 const itemFilter = document.getElementById('filter');
 const clearButton = document.getElementById('clear');
+const formBtn = itemForm.querySelector('button');
+
+let isEditMode = false;
 
 // Get items from localStorage if they exist
 const displayItems = () => {
@@ -83,7 +86,23 @@ const getItemsFromStorage = () => {
 const onClickItem = (e) => {
   if (e.target.parentElement.classList.contains('remove-item')) {
     removeItem(e.target.parentElement.parentElement);
+  } else {
+    setItemToEdit(e.target);
   }
+};
+
+// Toggle Edit Mode
+const setItemToEdit = (item) => {
+  isEditMode = true;
+
+  itemList
+    .querySelectorAll('li')
+    .forEach((i) => i.classList.remove('edit-mode'));
+
+  item.classList.add('edit-mode');
+  formBtn.innerHTML = '<i class="fa-solid fa-pen"></i> Update item';
+  formBtn.style.backgroundColor = '#228b22';
+  itemInput.value = item.textContent;
 };
 
 // Delete item
@@ -99,7 +118,7 @@ const removeItem = (item) => {
   }
 };
 
-//
+// Remove item from localStorage
 const removeItemFromLocalStorage = (item) => {
   let itemsFromStorage = getItemsFromStorage();
 
